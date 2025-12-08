@@ -1,0 +1,129 @@
+<body>
+
+<header>
+    <h1>Momo</h1>
+    <p>"Kisah tentang seorang anak dan kucing ajaib di tepi hutan"</p>
+</header>
+
+<nav>
+    <a href="#abstrak">Abstrak</a>
+    <a href="#pendahuluan">Pendahuluan</a>
+    <a href="#awal">Awal Kisah</a>
+    <a href="#hamilton">Pertemuan Misterius</a>
+    <a href="#gibbs">Perjalanan Bersama</a>
+    <a href="#bidang">Rintangan Terakhir</a>
+    <a href="#modern">Akhir Cerita</a>
+    <a href="#kesimpulan">Pesan Cerita</a>
+</nav>
+
+<section id="abstrak">
+    <h2>Abstrak</h2>
+    <p>
+        Cerita ini mengikuti seorang anak bernama Momo yang hidup di kota kecil selalu diselimuti kabut pagi. 
+        Dalam kesendiriannya, Momo bertemu kucing misterius bernama Pumo. Kisah ini bercerita tentang persahabatan, 
+        keberanian, dan makna meninggalkan jejak kebaikan meski dalam waktu yang singkat.
+    </p>
+</section>
+
+<section id="pendahuluan">
+    <h2>Pendahuluan</h2>
+    <p>
+        Momo tinggal bersama neneknya di rumah kayu tua di tepi hutan. Setiap pagi ia duduk di teras, memandangi pepohonan. 
+        Nenek selalu berkata, “Kalau kau mendengar hutan berbisik, itu artinya ia sedang menceritakan rahasianya.” 
+        Momo percaya akan hal itu dan selalu menunggu suara hutan.
+    </p>
+</section>
+
+<section id="awal">
+    <h2>1. Awal Kisah</h2>
+    <p>
+        Suatu sore, saat langit keemasan, Momo menemukan seekor kucing abu-abu kecil yang gemetar di tepi hutan. 
+        Ia menamainya Pumo. Sejak itu, Pumo selalu menemaninya, duduk di bawah pohon besar, berlari di rumput, 
+        dan mendengarkan bisikan hutan. Anehnya, Pumo hanya muncul saat Momo sendirian.
+    </p>
+</section>
+
+<section id="hamilton">
+    <h2>2. Pertemuan Misterius</h2>
+    <p>
+        Meskipun Pumo selalu menghilang ketika nenek melihatnya, nenek tetap tersenyum. Momo percaya bahwa kucing 
+        itu bukan kucing biasa. Pumo seperti sahabat rahasia, penghibur di kala sepi, yang selalu ada saat Momo membutuhkannya.
+    </p>
+</section>
+
+<section id="gibbs">
+    <h2>3. Perjalanan Bersama</h2>
+    <p>
+        Musim berganti, Momo mulai sering sakit. Tapi Pumo selalu menemaninya, tidur di pangkuannya, memberi rasa hangat. 
+        Setiap momen dengan Pumo membuat Momo merasa berani dan kuat, walau tubuhnya lemah.
+    </p>
+</section>
+
+<section id="bidang">
+    <h2>4. Rintangan Terakhir</h2>
+    <p>
+        Di malam terakhir, saat hujan turun dan angin bersenandung, Pumo datang ke samping ranjang Momo. 
+        Untuk pertama kalinya, nenek juga melihat kucing itu. Momo tersenyum dan seolah mengatakan perpisahan. 
+        Ia percaya bahwa ia tidak akan sendirian saat meninggalkan dunia ini.
+    </p>
+</section>
+
+<section id="modern">
+    <h2>5. Akhir Cerita</h2>
+    <p>
+        Keesokan paginya, Momo telah pergi. Namun, nenek melihat dua sosok kecil berlari di antara pepohonan: 
+        Momo dan Pumo. Sejak saat itu, setiap kabut turun di pagi hari, warga desa mengaku mendengar tawa lembut 
+        Momo di tepi hutan, tanda bahwa persahabatan dan keberanian selalu meninggalkan jejak.
+    </p>
+</section>
+
+<section id="kesimpulan">
+    <h2>Pesan Cerita</h2>
+    <p>
+        Cerita Momo mengajarkan bahwa persahabatan, keberanian, dan kebaikan bisa hadir meski singkat. 
+        Jejak kebaikan dan cinta akan selalu meninggalkan cahaya bagi dunia, seperti Momo dan sahabat kecilnya, Pumo.
+    </p>
+</section>
+
+<button id="toTop">↑</button>
+
+<footer>
+    <p>© 2025 Cerita Pendek "Momo" | Ditulis untuk Hiburan</p>
+</footer>
+
+<script>
+    const toTop = document.getElementById("toTop");
+
+    window.addEventListener("scroll", () => {
+        toTop.style.display = window.scrollY > 200 ? "block" : "none";
+    });
+
+    toTop.onclick = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    const navLinks = document.querySelectorAll("nav a");
+    const sections = document.querySelectorAll("section");
+
+    navLinks.forEach(link => {
+        link.addEventListener("click", function(e) {
+            e.preventDefault();
+            let target = document.querySelector(this.getAttribute("href"));
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+    });
+
+    window.addEventListener("scroll", () => {
+        let current = "";
+        sections.forEach(sec => {
+            const top = sec.offsetTop - 120;
+            if (scrollY >= top) current = sec.id;
+        });
+        navLinks.forEach(a => {
+            a.classList.remove("active");
+            if (a.getAttribute("href") === "#" + current) a.classList.add("active");
+        });
+    });
+</script>
+
+</body>
