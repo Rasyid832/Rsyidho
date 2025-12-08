@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Makanan Favorit | Rasyid Ridho</title>
+
+  <!-- Font Fantasy -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Cinzel', serif;
+      color: white;
+      text-align: center;
+      background: radial-gradient(circle at top, #1a1a40, #000);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Tombol kembali */
+    .btn-back {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      background: linear-gradient(135deg, #ff4500, #ffcc00);
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 0 15px rgba(255,140,0,0.8), 0 0 30px rgba(255,215,0,0.6);
+      transition: 0.3s;
+      z-index: 10;
+    }
+    .btn-back:hover {
+      background: linear-gradient(135deg, #ff6347, #ffd700);
+      transform: scale(1.05);
+    }
+
+    /* Container */
+    .content {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      margin: 120px auto 50px;
+      padding: 30px;
+      background: rgba(0,0,0,0.6);
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(255,255,255,0.25);
+    }
+
+    .content h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-shadow: 0 0 15px #ffcc00;
+    }
+
+    .content p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    /* Grid makanan */
+    .food-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+    }
+
+    /* Card makanan (flip effect) */
+    .food-card {
+      perspective: 1000px;
+      cursor: pointer;
+    }
+    .food-inner {
+      position: relative;
+      width: 100%;
+      height: 350px;
+      text-align: center;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+    .food-card:hover .food-inner {
+      transform: rotateY(180deg);
+    }
+    .food-front, .food-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 15px;
+      backface-visibility: hidden;
+      overflow: hidden;
+      box-shadow: 0 0 25px rgba(255,215,0,0.4);
+    }
+    .food-front {
+      background: rgba(0,0,0,0.7);
+    }
+    .food-front img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .food-back {
+      background: linear-gradient(135deg, #ff4500, #ffd700, #ff69b4);
+      color: black;
+      transform: rotateY(180deg);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .food-back h2 {
+      margin-bottom: 10px;
+    }
+
+    /* Tombol Random Food */
+    .btn-random {
+      margin-top: 30px;
+      padding: 12px 25px;
+      background: linear-gradient(135deg, #00c9ff, #92fe9d);
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(0,255,200,0.6);
+      transition: 0.3s;
+    }
+    .btn-random:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 30px rgba(0,255,200,0.9);
+    }
+
+    /* Popup modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 20;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: #fff;
+      color: black;
+      padding: 20px;
+      border-radius: 15px;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 0 25px gold;
+    }
+    .close {
+      float: right;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: red;
+    }
+
+    /* Bintang bergerak */
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      width: 2px;
+      height: 2px;
+      opacity: 0.8;
+      animation: moveStar 10s linear infinite;
+    }
+    @keyframes moveStar {
+      from { transform: translateY(0); }
+      to { transform: translateY(100vh); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Tombol kembali -->
+  <a href="coba.html" class="btn-back">⬅ Kembali</a>
+
+  <!-- Konten utama -->
+  <div class="content">
+    <h1>Makanan Favorit Saya</h1>
+    <p>
+      Setiap makanan punya cerita sendiri. Mari lihat 3 makanan favorit saya  ✨🍜🍔🍰
+    </p>
+
+    <div class="food-grid">
+      <!-- Card 1 -->
+      <div class="food-card" onclick="openModal('Kombinasi rasa lembut dan segar, dengan tekstur nasi yang pulen, potongan ikan yang meleleh di mulut, serta sentuhan gurih ringan dari soy sauce dan sedikit pedas dari wasabi.')">
+        <div class="food-inner">
+          <div class="food-front">
+            <img src="sushi.jpg" alt="Ramen">
+          </div>
+          <div class="food-back">
+            <h2>Sushi</h2>
+            <p>Kombinasi rasa lembut dan segar, dengan tekstur nasi yang pulen, potongan ikan yang meleleh di mulut, serta sentuhan gurih ringan dari soy sauce dan sedikit pedas dari wasabi.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="food-card" onclick="openModal('dengan bumbu khas yang sangat harum')">
+        <div class="food-inner">
+          <div class="food-front">
+            <img src="nasi goreng.jpg" alt="Nasi Goreng">
+          </div>
+          <div class="food-back">
+            <h2>Nasi Goreng</h2>
+            <p> dengan bumbu khas yang sangat harum.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="food-card" onclick="openModal('kombinasi rasa umami,tekstur kenyal dan kekayaan bumbu yang menggoda')">
+        <div class="food-inner">
+          <div class="food-front">
+            <img src="mie2.jpg" alt="mie">
+          </div>
+          <div class="food-back">
+            <h2>Mie</h2>
+            <p>kombinasi rasa umami,tekstur kenyal dan kekayaan bumbu yang menggoda</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tombol random -->
+    <button class="btn-random" onclick="randomFood()">🎲 Pilih Random Food</button>
+    <p id="randomResult" style="margin-top:15px; font-size:1.2rem; color:#ffcc00;"></p>
+  </div>
+
+  <!-- Popup modal -->
+  <div class="modal" id="foodModal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2 id="modalTitle"></h2>
+      <p id="modalDesc"></p>
+    </div>
+  </div>
+
+  <!-- Bintang random -->
+  <script>
+    // Buat bintang bergerak
+    for(let i=0; i<50; i++){
+      let star = document.createElement("div");
+      star.classList.add("star");
+      star.style.top = Math.random()*100+"vh";
+      star.style.left = Math.random()*100+"vw";
+      star.style.animationDuration = (5+Math.random()*10)+"s";
+      document.body.appendChild(star);
+    }
+
+    // Random food
+    function randomFood(){
+      let foods = ["Nasi Goreng", "Mie Goreng", "Ayam Goreng"];
+      let pick = foods[Math.floor(Math.random()*foods.length)];
+      document.getElementById("randomResult").innerText = "Pilihan random: " + pick;
+    }
+
+    // Modal popup
+    function openModal(title, desc){
+      document.getElementById("modalTitle").innerText = title;
+      document.getElementById("modalDesc").innerText = desc;
+      document.getElementById("foodModal").style.display = "flex";
+    }
+    function closeModal(){
+      document.getElementById("foodModal").style.display = "none";
+    }
+  </script>
+</body>
+</html>
