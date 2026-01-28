@@ -406,6 +406,138 @@ footer p{
   }
 }
 
+  /* ===============================
+   MOBILE FIRST (HP < 768px)
+================================ */
+@media (max-width: 768px) {
+
+  /* Navbar mobile */
+  nav .container {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 12px 0;
+  }
+
+  nav ul {
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 0.85rem;
+  }
+
+  /* Hero */
+  header {
+    padding: 140px 0 120px;
+  }
+
+  .hero h1 {
+    font-size: 2.4rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .hero .cta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* About section */
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+
+  .about-card {
+    padding: 28px;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  /* Photo smaller */
+  .photo-frame {
+    max-width: 320px;
+  }
+
+  /* Skills */
+  .skills {
+    grid-template-columns: 1fr;
+  }
+
+  /* Projects */
+  .projects {
+    grid-template-columns: 1fr;
+  }
+
+  /* Contact */
+  .contact {
+    grid-template-columns: 1fr;
+  }
+
+  .contact form {
+    padding: 26px;
+  }
+
+  /* Timeline padding */
+  .timeline {
+    padding-left: 20px;
+  }
+
+  .time::before {
+    left: -30px;
+  }
+}
+
+
+/* ===============================
+   TABLET / IPAD (768px–1024px)
+================================ */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+  header {
+    padding: 160px 0 140px;
+  }
+
+  .about-grid {
+    grid-template-columns: 1.1fr .9fr;
+    gap: 42px;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .skills {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .projects {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .contact {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ===============================
+   LARGE DESKTOP (1440px+)
+================================ */
+@media (min-width: 1440px) {
+
+  .container {
+    max-width: 1300px;
+  }
+
+  .hero h1 {
+    font-size: 4.6rem;
+  }
+}
+
+
 
 
 </style>
@@ -867,3 +999,4 @@ if(aboutSec) observer.observe(aboutSec);
 </script>
 </body>
 </html>
+
