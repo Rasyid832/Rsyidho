@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anggota</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 40px 15px;
+        background: #04070f;
+        font-family: "Poppins", sans-serif;
+        color: white;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 32px;
+        font-weight: 600;
+        color: #7ae9ff;
+        text-shadow: 0 0 12px #00d4ff;
+    }
+
+    .container {
+        max-width: 850px;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+        align-items: center;
+    }
+
+    /* Kartu baru: minimalis + hologram tipis */
+    .card {
+        width: 100%;
+        max-width: 430px;
+        padding: 22px;
+        border-radius: 18px;
+
+        background: rgba(0, 128, 255, 0.03);
+        border: 1.5px solid rgba(0, 200, 255, 0.35);
+
+        box-shadow:
+            0 0 10px rgba(0, 200, 255, 0.25),
+            inset 0 0 10px rgba(0, 150, 255, 0.2);
+
+        display: flex;
+        align-items: center;
+        gap: 18px;
+
+        backdrop-filter: blur(4px);
+        transition: 0.35s ease;
+    }
+
+    /* Hover: nge-float + garis border bercahaya */
+    .card:hover {
+        transform: translateY(-8px);
+        border-color: #00eaff;
+        box-shadow:
+            0 0 18px rgba(0, 255, 255, 0.7),
+            inset 0 0 15px rgba(0, 200, 255, 0.3);
+    }
+
+    /* Foto persegi glow */
+    .card img {
+        width: 130px;
+        height: 130px;
+        object-fit: cover;
+        border-radius: 12px;
+
+        border: 2px solid #00eaff;
+        box-shadow:
+            0 0 12px #00eaff,
+            0 0 20px rgba(0, 200, 255, 0.6);
+    }
+
+    .nama {
+        font-size: 22px;
+        font-weight: 500;
+        color: #aefaff;
+        text-shadow: 0 0 8px #00d0ff;
+    }
+
+    /* tombol*/
+     .btn-back {
+        margin: 45px auto 0;
+        display: block;
+        width: 180px;
+        padding: 12px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        background: #00aaff;
+        color: white;
+        font-size: 18px;
+        font-weight: 500;
+        transition: 0.3s;
+    }
+
+    .btn-back:hover {
+        background: #0088cc;
+        box-shadow: 0 0 18px #00d4ff;
+    }
+
+</style>
+</head>
+<body>
+
+<h1>Daftar Anggota</h1>
+
+<div class="container">
+
+    <div class="card">
+        <img src="foto.jpg" alt="Foto 1">
+        <div class="nama">Muhammad Rasyid Ridho</div>
+    </div>
+
+    <div class="card">
+        <img src="arzu - Copy.jpg" alt="Foto 2">
+        <div class="nama">Tuah Shahjahan Arzu</div>
+    </div>
+
+    <div class="card">
+        <img src="killa.jpg" alt="Foto 3">
+        <div class="nama">Shakilla Marsyanda</div>
+    </div>
+
+</div>
+
+<button class="btn-back" onclick="history.back()">← Kembali</button>
+
+</body>
+</html>

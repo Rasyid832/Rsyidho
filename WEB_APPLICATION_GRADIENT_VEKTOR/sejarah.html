@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sejarah Gradient Vektor</title>
+
+<style>
+    body {
+        font-family: "Georgia", serif;
+        margin: 0;
+        padding: 0;
+        line-height: 1.8;
+        background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+        color: #f1f1f1;
+        scroll-behavior: smooth;
+    }
+
+    header {
+        background: rgba(0,0,0,0.6);
+        padding: 30px;
+        text-align: center;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 2.5rem;
+        color: #ffdd57;
+        text-shadow: 0 0 10px #ff8;
+    }
+
+    nav {
+        background: rgba(255,255,255,0.1);
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        position: sticky;
+        top: 0;
+        backdrop-filter: blur(6px);
+        z-index: 1000;
+    }
+
+    nav a {
+        text-decoration: none;
+        color: #ffdd57;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    nav a:hover {
+        color: #ff6ec7;
+    }
+
+    nav a.active {
+        color: #ff6ec7;
+        text-shadow: 0 0 8px #ff6ec7;
+    }
+
+    section {
+        max-width: 850px;
+        margin: 40px auto;
+        padding: 25px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    section h2 {
+        color: #ffdd57;
+        border-bottom: 2px solid rgba(255,255,255,0.2);
+        padding-bottom: 5px;
+    }
+
+    footer {
+        text-align: center;
+        padding: 20px;
+        background: rgba(0,0,0,0.7);
+        color: #bbb;
+        margin-top: 40px;
+    }
+
+    @keyframes fadeIn {
+        from {opacity: 0; transform: translateY(30px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+
+    #toTop {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #ffdd57;
+        color: #222;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        font-size: 18px;
+        cursor: pointer;
+        display: none;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+        transition: 0.3s;
+        z-index: 999;
+    }
+
+    #toTop:hover {
+        background: #ff6ec7;
+        color: white;
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Sejarah Gradient Vektor</h1>
+    <p>"Perkembangan Konsep Arah Perubahan Hingga Bidang Singgung Modern"</p>
+</header>
+
+<nav>
+    <a href="#abstrak">Abstrak</a>
+    <a href="#pendahuluan">Pendahuluan</a>
+    <a href="#awal">Asal Usul</a>
+    <a href="#hamilton">Hamilton & Nabla</a>
+    <a href="#gibbs">Gibbs & Heaviside</a>
+    <a href="#bidang">Kaitan dengan Bidang Singgung</a>
+    <a href="#modern">Penggunaan Modern</a>
+    <a href="#kesimpulan">Kesimpulan</a>
+</nav>
+
+<section id="abstrak">
+    <h2>Abstrak</h2>
+    <p>
+        Gradient vektor adalah alat matematika yang digunakan untuk menentukan arah perubahan tercepat dari suatu 
+        fungsi. Konsep ini tidak muncul secara langsung, tetapi merupakan hasil perkembangan panjang dari studi 
+        tentang perubahan, geometri permukaan, hingga penyusunan kalkulus vektor modern. Halaman ini membahas 
+        sejarah lengkap gradient vektor sekaligus kaitannya dengan persamaan bidang singgung.
+    </p>
+</section>
+
+<section id="pendahuluan">
+    <h2>Pendahuluan</h2>
+    <p>
+        Dalam dunia matematika dan fisika, gradient memiliki peran penting sebagai penunjuk arah perubahan 
+        paling besar dari sebuah permukaan atau fungsi. Konsep ini kemudian berkembang menjadi fondasi penting 
+        dalam analisis vektor dan pada akhirnya digunakan juga dalam penentuan bidang singgung. Untuk memahami 
+        fungsinya hari ini, kita perlu melihat sejarah bagaimana konsep ini terbentuk.
+    </p>
+</section>
+
+<section id="awal">
+    <h2>1. Asal Usul: Perubahan dan Geometri</h2>
+    <p>
+        Ide dasar gradien berawal dari studi mengenai kemiringan dan perubahan suatu kurva pada abad ke-17.
+        Pada masa itu, peneliti hanya memahami kemiringan garis singgung pada fungsi satu variabel. 
+        Namun, muncul kebutuhan untuk memahami bentuk dan arah perubahan pada permukaan tiga dimensi.
+        Konsep ini menjadi pondasi yang nantinya mengarah pada lahirnya gradient vektor.
+    </p>
+</section>
+
+<section id="hamilton">
+    <h2>2. William Rowan Hamilton dan Lahirnya Simbol Nabla (∇)</h2>
+    <p>
+        Tonggak penting terjadi pada abad ke-19 ketika William Rowan Hamilton memperkenalkan operator ∇ 
+        dalam pengembangan teori quaternion. Meskipun pada mulanya tidak digunakan untuk gradien, simbol ini 
+        ternyata sangat cocok untuk merepresentasikan operasi arah, termasuk arah perubahan suatu fungsi.
+        ∇ kemudian menjadi simbol resmi untuk menunjukkan "operator arah" dalam kalkulus vektor.
+    </p>
+</section>
+
+<section id="gibbs">
+    <h2>3. Gibbs & Heaviside: Pembentuk Gradient Modern</h2>
+    <p>
+        Pada akhir abad ke-19, Josiah Willard Gibbs dan Oliver Heaviside merumuskan bentuk kalkulus vektor modern. 
+        Mereka menyatukan informasi tentang perubahan suatu fungsi ke dalam sebuah vektor tunggal yang kini kita kenal sebagai:
+        <br><br>
+        <b>∇f = ( … )</b>
+        <br><br>
+        Inilah pertama kalinya arah perubahan maksimum suatu fungsi dituliskan dalam bentuk vektor lengkap.
+    </p>
+</section>
+
+<section id="bidang">
+    <h2>4. Kaitan Gradient dengan Bidang Singgung</h2>
+    <p>
+        Salah satu penerapan paling penting dalam sejarah gradient adalah penentuan bidang singgung suatu permukaan. 
+        Gradient menunjukkan arah tegak lurus (normal) pada permukaan, sehingga sangat penting dalam menentukan 
+        persamaan bidang singgung. Konsep inilah yang menjadikan gradient sebagai jembatan antara fungsi matematika 
+        dan bentuk geometris tiga dimensi.
+    </p>
+</section>
+
+<section id="modern">
+    <h2>5. Penggunaan Modern</h2>
+    <p>Hari ini, gradient digunakan di hampir seluruh bidang teknologi:</p>
+    <ul>
+        <li>Optimasi (misalnya gradient descent dalam AI)</li>
+        <li>Fisika dan teknik (medan gaya, aliran fluida)</li>
+        <li>Grafika komputer</li>
+        <li>Geometri komputasi</li>
+        <li>Simulasi ilmiah</li>
+        <li>Sistem navigasi dan robotika</li>
+    </ul>
+</section>
+
+<section id="kesimpulan">
+    <h2>Kesimpulan</h2>
+    <p>
+        Gradient vektor adalah hasil perjalanan panjang yang dimulai dari ide kemiringan sederhana hingga menjadi 
+        alat serbaguna dalam teknik modern. Perannya sebagai arah perubahan terbesar dan sebagai normal bidang 
+        menjadikannya pusat dalam banyak aplikasi matematika, termasuk penentuan persamaan bidang singgung.
+    </p>
+</section>
+
+<button id="toTop">↑</button>
+
+<footer>
+    <p>© 2025 Sejarah Gradient Vektor | Dibuat untuk Pembelajaran</p>
+</footer>
+
+<script>
+    const toTop = document.getElementById("toTop");
+
+    window.addEventListener("scroll", () => {
+        toTop.style.display = window.scrollY > 200 ? "block" : "none";
+    });
+
+    toTop.onclick = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    const navLinks = document.querySelectorAll("nav a");
+    const sections = document.querySelectorAll("section");
+
+    navLinks.forEach(link => {
+        link.addEventListener("click", function(e) {
+            e.preventDefault();
+            let target = document.querySelector(this.getAttribute("href"));
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+    });
+
+    window.addEventListener("scroll", () => {
+        let current = "";
+        sections.forEach(sec => {
+            const top = sec.offsetTop - 120;
+            if (scrollY >= top) current = sec.id;
+        });
+        navLinks.forEach(a => {
+            a.classList.remove("active");
+            if (a.getAttribute("href") === "#" + current) a.classList.add("active");
+        });
+    });
+</script>
+
+</body>
+</html>

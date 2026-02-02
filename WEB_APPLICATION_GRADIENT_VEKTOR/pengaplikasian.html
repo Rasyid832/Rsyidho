@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengaplikasian Gradient Vektor</title>
+
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: white;
+            overflow-x: hidden;
+            background: #020510;
+        }
+
+        /* Canvas partikel */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+
+        /* Lapisan gelap untuk kontras */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.45);
+            z-index: -1;
+        }
+
+        .container {
+            width: 85%;
+            margin: auto;
+            padding-top: 60px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 48px;
+            color: cyan;
+        }
+
+        .desc {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 18px;
+            color: #cdeaff;
+        }
+
+        .grid {
+            margin-top: 60px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 35px;
+        }
+
+        .card {
+            padding: 25px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 14px;
+            backdrop-filter: blur(10px);
+            transition: 0.4s;
+            box-shadow: 0 0 20px rgba(0,255,255,0.08);
+            transform: translateY(40px);
+            opacity: 0;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.04);
+            box-shadow: 0 0 25px rgba(0,255,255,0.25);
+        }
+
+        .card h2 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: cyan;
+        }
+
+        .card p {
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            h1 { font-size: 34px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Canvas Partikel -->
+<canvas id="particles"></canvas>
+
+<div class="container">
+
+    <h1>Pengaplikasian Gradient Vektor</h1>
+    <p class="desc">Gradient vektor digunakan pada berbagai bidang teknologi, matematika, dan simulasi modern.</p>
+
+    <div class="grid">
+
+        <div class="card">
+            <h2><i data-feather="cpu"></i> Machine Learning</h2>
+            <p>Gradient digunakan dalam <b>Gradient Descent</b> untuk memperbarui bobot model agar error semakin kecil.</p>
+        </div>
+
+        <div class="card">
+            <h2><i data-feather="activity"></i> Fisika & Medan</h2>
+            <p>Dipakai untuk mengetahui arah perubahan tercepat pada medan listrik, gravitasi, dan fluida.</p>
+        </div>
+
+        <div class="card">
+            <h2><i data-feather="trending-up"></i> Optimisasi</h2>
+            <p>Gradient membantu menemukan titik maksimum, minimum, dan titik kritis suatu fungsi.</p>
+        </div>
+
+        <div class="card">
+            <h2><i data-feather="image"></i> Computer Graphics</h2>
+            <p>Gradient dipakai dalam <b>edge detection</b>, contour mapping, pencahayaan (shading), dan transformasi gambar.</p>
+        </div>
+
+        <div class="card">
+            <h2><i data-feather="map"></i> Navigasi Robot</h2>
+            <p>Robot menggunakan gradient pada peta medan untuk mencari jalur dengan hambatan paling kecil.</p>
+        </div>
+
+        <div class="card">
+            <h2><i data-feather="camera"></i> Computer Vision</h2>
+            <p>Digunakan dalam algoritma <b>Sobel, Prewitt, Laplacian</b> untuk mendeteksi garis, tepi, dan pola.</p>
+        </div>
+
+        <div class="card">
+            <h2><i data-feather="codesandbox"></i> Simulasi & Game Physics</h2>
+            <p>Digunakan untuk menghitung arah perubahan energi potensial pada simulasi game dan fisika.</p>
+        </div>
+
+        <div class="card">
+            <h2><i data-feather="database"></i> Data Science</h2>
+            <p>Pada regresi dan pemodelan matematis, gradient digunakan untuk meminimalkan error prediksi.</p>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    feather.replace();
+
+    // Animasi slide-in card
+    window.addEventListener('DOMContentLoaded', () => {
+        const cards = document.querySelectorAll('.card');
+        cards.forEach((card, index) => {
+            setTimeout(() => {
+                card.style.opacity = "1";
+                card.style.transform = "translateY(0)";
+            }, index * 200);
+        });
+    });
+
+    // ====== PARTICLE BACKGROUND ======
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = [];
+    const totalParticles = 120;
+
+    for (let i = 0; i < totalParticles; i++) {
+        particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 2 + 1,
+            speedX: (Math.random() - 0.5) * 0.8,
+            speedY: (Math.random() - 0.5) * 0.8
+        });
+    }
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        particles.forEach(p => {
+            p.x += p.speedX;
+            p.y += p.speedY;
+
+            if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+            if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+
+            ctx.fillStyle = "cyan";
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+        });
+
+        requestAnimationFrame(animateParticles);
+    }
+
+    animateParticles();
+
+    window.addEventListener("resize", () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+</script>
+</body>
+</html>
