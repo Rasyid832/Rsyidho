@@ -1,1 +1,394 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Corporate Quiz – Tanda Baca</title>
 
+<!-- =======================
+     FONT & LIBRARY
+======================= -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<!-- =======================
+     STYLE – CORPORATE UI
+======================= -->
+<style>
+
+/* =======================
+   ROOT THEME
+======================= */
+:root{
+  --bg-main:#0b1220;
+  --bg-secondary:#111827;
+  --glass:rgba(255,255,255,0.06);
+  --border:rgba(255,255,255,0.12);
+  --primary:#2563eb;
+  --accent:#38bdf8;
+  --success:#22c55e;
+  --error:#ef4444;
+  --text-soft:#cbd5f5;
+}
+
+/* =======================
+   RESET
+======================= */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',sans-serif;
+}
+
+body{
+  height:100vh;
+  background:linear-gradient(145deg,var(--bg-main),var(--bg-secondary));
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  overflow:hidden;
+}
+
+/* =======================
+   BACKGROUND DECOR
+======================= */
+.bg-circle{
+  position:absolute;
+  width:500px;
+  height:500px;
+  background:radial-gradient(circle,var(--primary),transparent 65%);
+  filter:blur(120px);
+  opacity:.4;
+  animation:float 10s infinite alternate ease-in-out;
+}
+
+.bg-circle.one{top:-200px;left:-200px}
+.bg-circle.two{bottom:-200px;right:-200px}
+
+@keyframes float{
+  from{transform:translateY(0)}
+  to{transform:translateY(60px)}
+}
+
+/* =======================
+   APP CONTAINER
+======================= */
+#app{
+  width:100%;
+  max-width:900px;
+  padding:24px;
+  z-index:2;
+}
+
+/* =======================
+   PROGRESS
+======================= */
+.progress-wrapper{
+  height:8px;
+  background:rgba(255,255,255,.1);
+  border-radius:10px;
+  overflow:hidden;
+  margin-bottom:14px;
+}
+
+#progress{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--accent),var(--primary));
+  transition:.5s;
+}
+
+/* =======================
+   TIMER
+======================= */
+#timer{
+  text-align:right;
+  font-size:14px;
+  color:var(--text-soft);
+  margin-bottom:16px;
+}
+
+/* =======================
+   CARD
+======================= */
+.card{
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:28px;
+  padding:48px;
+  backdrop-filter:blur(20px);
+  box-shadow:0 30px 80px rgba(0,0,0,.6);
+  animation:fade .5s ease;
+}
+
+@keyframes fade{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.center{text-align:center}
+
+/* =======================
+   TYPOGRAPHY
+======================= */
+h1{
+  font-size:34px;
+  margin-bottom:14px;
+}
+
+h2{
+  font-size:26px;
+  margin-bottom:30px;
+}
+
+/* =======================
+   OPTIONS
+======================= */
+.option{
+  padding:18px 22px;
+  border-radius:18px;
+  border:1px solid var(--border);
+  margin-bottom:16px;
+  cursor:pointer;
+  transition:.25s;
+}
+
+.option:hover{
+  background:rgba(255,255,255,.08);
+  transform:translateY(-4px);
+}
+
+.option.correct{
+  background:rgba(34,197,94,.25);
+  border-color:var(--success);
+}
+
+.option.wrong{
+  background:rgba(239,68,68,.25);
+  border-color:var(--error);
+}
+
+/* =======================
+   BUTTON
+======================= */
+button{
+  padding:14px 30px;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(90deg,var(--primary),var(--accent));
+  color:white;
+  font-weight:700;
+  font-size:16px;
+  cursor:pointer;
+  transition:.3s;
+}
+
+button:hover{
+  transform:scale(1.05);
+}
+
+/* =======================
+   SCORE
+======================= */
+.score{
+  font-size:82px;
+  font-weight:800;
+  margin:20px 0;
+}
+
+/* =======================
+   DISCUSSION
+======================= */
+.discussion p{
+  background:rgba(255,255,255,.05);
+  padding:16px;
+  border-radius:16px;
+  margin-bottom:14px;
+  border-left:4px solid var(--accent);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bg-circle one"></div>
+<div class="bg-circle two"></div>
+
+<div id="app">
+  <div class="progress-wrapper">
+    <div id="progress"></div>
+  </div>
+  <div id="timer"></div>
+  <div id="screen"></div>
+</div>
+
+<script>
+/* =====================================================
+   QUESTION BANK – CORPORATE DATA
+===================================================== */
+const QUESTIONS = [
+  {
+    q:"Kalimat yang menggunakan tanda baca dengan benar adalah:",
+    o:[
+      "Ibu berkata \"Belajar yang rajin\".",
+      "Ibu berkata, \"Belajar yang rajin.\"",
+      "Ibu berkata \"Belajar yang rajin\".",
+      "Ibu berkata: \"Belajar yang rajin\"."
+    ],
+    a:1,
+    e:"Titik diletakkan di dalam tanda petik."
+  },
+  {
+    q:"Tanda baca di akhir kalimat tanya adalah:",
+    o:["Titik","Tanda tanya","Tanda seru","Titik dua"],
+    a:1,
+    e:"Kalimat tanya diakhiri tanda tanya (?)."
+  },
+  {
+    q:"Penulisan perincian yang benar adalah:",
+    o:[
+      "Buku, pensil dan penghapus",
+      "Buku pensil, dan penghapus",
+      "Buku, pensil, dan penghapus",
+      "Buku pensil dan penghapus"
+    ],
+    a:2,
+    e:"Koma digunakan di setiap unsur perincian."
+  },
+  {
+    q:"Tanda baca untuk memisahkan dua klausa setara:",
+    o:["Titik koma","Titik","Koma","Tanda seru"],
+    a:0,
+    e:"Titik koma (;) memisahkan klausa setara."
+  },
+  {
+    q:"Kalimat seruan yang benar adalah:",
+    o:[
+      "Wah indah sekali pemandangan ini.",
+      "Wah, indah sekali pemandangan ini!",
+      "Wah! indah sekali pemandangan ini.",
+      "Wah! Indah sekali pemandangan ini."
+    ],
+    a:3,
+    e:"Tanda seru dan kapital harus tepat."
+  }
+];
+
+/* =====================================================
+   QUIZ ENGINE
+===================================================== */
+class CorporateQuiz{
+  constructor(){
+    this.index=0;
+    this.score=0;
+    this.timer=null;
+  }
+
+  start(){
+    this.renderQuestion();
+  }
+
+  renderQuestion(){
+    const q=QUESTIONS[this.index];
+    document.getElementById("progress").style.width =
+      (this.index/QUESTIONS.length*100)+"%";
+
+    document.getElementById("screen").innerHTML=`
+      <div class="card">
+        <h2>${q.q}</h2>
+        ${q.o.map((opt,i)=>`
+          <div class="option" onclick="app.answer(${i},this)">
+            ${opt}
+          </div>
+        `).join("")}
+      </div>
+    `;
+    this.startTimer();
+  }
+
+  startTimer(){
+    let t=12;
+    document.getElementById("timer").innerText="⏱ "+t+" detik";
+    clearInterval(this.timer);
+    this.timer=setInterval(()=>{
+      t--;
+      document.getElementById("timer").innerText="⏱ "+t+" detik";
+      if(t<=0){
+        clearInterval(this.timer);
+        this.next();
+      }
+    },1000);
+  }
+
+  answer(choice,el){
+    clearInterval(this.timer);
+    const correct=QUESTIONS[this.index].a;
+    if(choice===correct){
+      this.score+=20;
+      el.classList.add("correct");
+    }else{
+      el.classList.add("wrong");
+    }
+    setTimeout(()=>this.next(),800);
+  }
+
+  next(){
+    this.index++;
+    if(this.index<QUESTIONS.length){
+      this.renderQuestion();
+    }else{
+      this.showResult();
+    }
+  }
+
+  showResult(){
+    document.getElementById("progress").style.width="100%";
+    document.getElementById("timer").innerText="";
+    if(this.score>=80){
+      confetti({particleCount:180,spread:100});
+    }
+    document.getElementById("screen").innerHTML=`
+      <div class="card center">
+        <h2>Skor Akhir</h2>
+        <div class="score">${this.score}</div>
+        <button onclick="app.showDiscussion()">Lihat Pembahasan</button>
+      </div>
+    `;
+  }
+
+  showDiscussion(){
+    document.getElementById("screen").innerHTML=`
+      <div class="card discussion">
+        ${QUESTIONS.map((q,i)=>`
+          <p>
+            <b>${i+1}. ${q.q}</b><br>
+            Jawaban benar: ${q.o[q.a]}<br>
+            <i>${q.e}</i>
+          </p>
+        `).join("")}
+      </div>
+    `;
+  }
+}
+
+/* =====================================================
+   INIT
+===================================================== */
+const app=new CorporateQuiz();
+
+document.getElementById("screen").innerHTML=`
+  <div class="card center">
+    <h1>BAHASA INDONESIA</h1>
+    <p style="opacity:.8;margin-bottom:30px">
+      Mini Quiz Pemahaman Tanda Baca
+    </p>
+    <button onclick="app.start()">Mulai Quiz</button>
+  </div>
+`;
+</script>
+
+</body>
+</html>
