@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini AI Hub - Smart Assistant</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen flex flex-col justify-between">
+
+    <header class="bg-slate-950 border-b border-slate-800 px-6 py-4 flex items-center justify-between shadow-md">
+        <div class="flex items-center gap-3">
+            <span class="text-2xl animate-bounce">🔮</span>
+            <div>
+                <h1 class="text-xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                    Smart AI Assistant
+                </h1>
+                <p class="text-xs text-slate-400">Model: Gemini 2.5 Flash (Multi-turn Chat)</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-2 text-xs bg-slate-900 border border-slate-700 rounded-full px-3 py-1 text-emerald-400">
+            <span class="w-2 h-2 bg-emerald-500 rounded-full animate-ping"></span>
+            Server Connected
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-4xl w-full mx-auto p-4 md:p-6 flex flex-col justify-between h-[calc(100vh-8rem)]">
+        
+        <div id="chat-container" class="flex-1 bg-slate-950 border border-slate-800 rounded-2xl p-4 md:p-6 overflow-y-auto space-y-4 shadow-inner custom-scrollbar">
+            
+            <div class="flex flex-col items-start gap-1">
+                <span class="text-xs text-slate-500 ml-2">AI Assistant</span>
+                <div class="bg-slate-900 text-slate-200 max-w-[85%] rounded-2xl rounded-tl-none px-4 py-3 text-sm border border-slate-800 shadow-md leading-relaxed">
+                    Yo bro! Mulai sekarang aku bakal jadi asisten pribadi sekaligus teman diskusi kamu. Mau bahas kodingan, tugas kuliah, nyari ide project, atau sekadar ngobrol santai? Lempar aja ke sini, kita beresin bareng-bareng! 🚀
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mt-4 bg-slate-950 p-2 rounded-2xl border border-slate-800 shadow-xl flex items-center gap-2">
+            <input 
+                type="text" 
+                id="chat-input" 
+                class="flex-1 bg-slate-900 border border-slate-700/60 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all font-medium" 
+                placeholder="Tanyakan apa saja ke AI di sini (Tekan Enter)..." 
+                onkeypress="if(event.key === 'Enter') sendChatMessage()"
+                autocomplete="off"
+            >
+            <button 
+                onclick="sendChatMessage()" 
+                class="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold text-sm px-5 py-3 rounded-xl transition-all active:scale-95 shadow-md flex items-center gap-2 cursor-pointer"
+            >
+                Kirim 🚀
+            </button>
+        </div>
+
+    </main>
+
+    <footer class="text-center py-2 text-xs text-slate-600 border-t border-slate-950 bg-slate-950/40">
+        v1.1.0 &bull; Powered by Google Gemini API & Node.js
+    </footer>
+
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 9999px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

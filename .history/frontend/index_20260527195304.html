@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini AI Hub</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen flex">
+
+    <div class="w-64 bg-slate-950 p-6 flex flex-col justify-between border-r border-slate-800">
+        <div>
+            <div class="flex items-center gap-3 mb-8">
+                <span class="text-2xl">🤖</span>
+                <h1 class="text-xl font-bold bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">Mini AI Hub</h1>
+            </div>
+            
+            <nav class="space-y-2">
+                <button onclick="switchTab('text-enhancer')" id="btn-text-enhancer" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left font-medium transition bg-blue-600 text-white">
+                    <span>📝</span> Text Enhancer
+                </button>
+                <button onclick="switchTab('code-fixer')" id="btn-code-fixer" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left font-medium text-slate-400 hover:bg-slate-900 hover:text-slate-200 transition">
+                    <span>💻</span> Code Fixer
+                </button>
+            </nav>
+        </div>
+        <div class="text-xs text-slate-500 border-t border-slate-800 pt-4">
+            v1.0.0 &bull; Powered by Gemini
+        </div>
+    </div>
+
+    <div class="flex-1 p-8 overflow-y-auto">
+        
+        <div id="tab-text-enhancer" class="tab-content space-y-6">
+            <div>
+                <h2 class="text-2xl font-bold">Text Enhancer & Assistant</h2>
+                <p class="text-slate-400 text-sm mt-1">Format ulang pesan untuk dosen, perbaiki grammar, atau buat ringkasan materi kuliah secara instan.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-slate-950 p-6 rounded-xl border border-slate-800 flex flex-col gap-4">
+                    <label class="font-medium text-slate-300">Masukkan Teks:</label>
+                    <textarea id="text-input" rows="8" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-slate-200 focus:outline-none focus:border-blue-500 resize-none" placeholder="Tulis atau paste teks kamu di sini..."></textarea>
+                    
+                    <div class="flex flex-wrap gap-2 items-center justify-between">
+                        <select id="text-mode" class="bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm text-slate-300 focus:outline-none focus:border-blue-500">
+                            <option value="formal">Ubah ke Formal (Pesan Dosen)</option>
+                            <option value="summarize">Rangkum Teks (Poin Singkat)</option>
+                            <option value="grammar">Perbaiki Ejaan & Grammar</option>
+                        </select>
+                        <button onclick="processText()" class="bg-blue-600 hover:bg-blue-500 font-medium px-5 py-2 rounded-lg transition active:scale-95">Proses AI ✨</button>
+                    </div>
+                </div>
+
+                <div class="bg-slate-950 p-6 rounded-xl border border-slate-800 flex flex-col gap-4">
+                    <label class="font-medium text-slate-300">Hasil Analisis AI:</label>
+                    <div id="text-output" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-3 min-h-[200px] text-slate-300 whitespace-pre-wrap overflow-y-auto placeholder-slate-600" data-placeholder="Hasil pemrosesan AI akan muncul di sini...">Hasil pemrosesan AI akan muncul di sini...</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-code-fixer" class="tab-content hidden space-y-6">
+            <div>
+                <h2 class="text-2xl font-bold">Smart Code Fixer</h2>
+                <p class="text-slate-400 text-sm mt-1">Temukan bug pada kodinganmu, dapatkan perbaikan kode beserta penjelasannya logisnya.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-slate-950 p-6 rounded-xl border border-slate-800 flex flex-col gap-4">
+                    <label class="font-medium text-slate-300">Tempel Kodingan (HTML/CSS/JS/Java/dll):</label>
+                    <textarea id="code-input" rows="10" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 font-mono text-sm text-emerald-400 focus:outline-none focus:border-emerald-500 resize-none" placeholder="// Tempel kode yang error atau bug di sini..."></textarea>
+                    <button onclick="processCode()" class="bg-emerald-600 hover:bg-emerald-500 font-medium px-5 py-2 rounded-lg transition self-end active:scale-95">Perbaiki Kode 🛠️</button>
+                </div>
+
+                <div class="bg-slate-950 p-6 rounded-xl border border-slate-800 flex flex-col gap-4">
+                    <label class="font-medium text-slate-300">Rekomendasi Solusi:</label>
+                    <div id="code-output" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-3 min-h-[250px] text-slate-300 font-mono text-sm whitespace-pre-wrap overflow-y-auto">Hasil perbaikan dan penjelasan bug akan muncul di sini...</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
