@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Syid AI</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer
+    src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInBody(document.body);">
+  </script>
+
+  <style>
+    *{
+      font-family:'Sora',sans-serif;
+    }
+
+    html,
+    body{
+      height:100%;
+      overflow:hidden;
+    }
+
+    body{
+      background:
+      linear-gradient(
+        135deg,
+        #f8e8ff 0%,
+        #eef2ff 50%,
+        #f5f3ff 100%
+      );
+      color:#1e293b;
+      position:relative;
+    }
+
+    .glass{
+      background:rgba(255,255,255,.14);
+      backdrop-filter:blur(24px);
+      border:1px solid rgba(255,255,255,.24);
+      box-shadow:
+      0 10px 40px rgba(168,85,247,.10);
+    }
+
+    .aurora{
+      position:absolute;
+      width:300px;
+      height:300px;
+      border-radius:999px;
+      filter:blur(100px);
+      opacity:.35;
+      z-index:-1;
+      animation:pulseAurora 8s infinite ease-in-out;
+    }
+
+    @media (min-width: 768px) {
+      .aurora {
+        width: 500px;
+        height: 500px;
+        filter:blur(120px);
+      }
+    }
+
+    .aurora1{
+      background:#d946ef;
+      top:-100px;
+      left:-100px;
+    }
+
+    .aurora2{
+      background:#8b5cf6;
+      bottom:-100px;
+      right:-100px;
+    }
+
+    @keyframes pulseAurora{
+      0%,100%{
+        transform:scale(1);
+      }
+      50%{
+        transform:scale(1.15);
+      }
+    }
+
+    .floating-logo{
+      animation:float 5s ease-in-out infinite;
+    }
+
+    @keyframes float{
+      0%,100%{
+        transform:translateY(0px);
+      }
+      50%{
+        transform:translateY(-10px);
+      }
+    }
+
+    .message-animation{
+      animation:fadeUp .4s ease;
+    }
+
+    @keyframes fadeUp{
+      from{
+        opacity:0;
+        transform:translateY(20px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0px);
+      }
+    }
+
+    .custom-scrollbar::-webkit-scrollbar{
+      width:5px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb{
+      background:#c084fc;
+      border-radius:999px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track{
+      background:transparent;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="aurora aurora1"></div>
+  <div class="aurora aurora2"></div>
+
+  <div class="h-screen p-2 sm:p-4">
+
+    <div class="flex gap-5 h-full relative">
+
+      <aside id="sidebar" class="
+      fixed inset-y-0 left-0 z-50 transform -translate-x-full transition-transform duration-300 ease-in-out
+      lg:relative lg:translate-x-0 lg:z-auto
+      flex w-[280px] sm:w-[300px]
+      glass
+      rounded-[30px] lg:rounded-[35px]
+      p-5
+      flex-col
+      shrink-0">
+
+        <div class="flex items-center justify-between lg:justify-start gap-4">
+          <div class="flex items-center gap-4">
+            <div class="floating-logo relative">
+              <div class="
+              w-12 h-12 sm:w-14 sm:h-14
+              rounded-[18px] sm:rounded-[22px]
+              bg-gradient-to-br
+              from-fuchsia-400
+              via-violet-500
+              to-purple-600
+              flex items-center justify-center
+              shadow-[0_0_50px_rgba(168,85,247,.4)]">
+                <div class="
+                w-8 h-8 sm:w-9 sm:h-9
+                rounded-full
+                bg-white/25
+                backdrop-blur-xl
+                flex items-center justify-center
+                text-white
+                text-base sm:text-lg">
+                  ✦
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h1 class="
+              text-xl sm:text-2xl
+              font-bold
+              bg-gradient-to-r
+              from-violet-700
+              to-fuchsia-500
+              bg-clip-text
+              text-transparent">
+                Syid AI
+              </h1>
+              <p class="text-[10px] sm:text-xs text-slate-500 mt-0.5 sm:mt-1">
+                By Muhammad Rasyid Ridho
+              </p>
+            </div>
+          </div>
+
+          <button onclick="toggleSidebar()" class="lg:hidden p-2 text-slate-500 hover:text-rose-500 cursor-pointer text-lg font-bold">
+            ✕
+          </button>
+        </div>
+
+        <button class="
+        mt-6 sm:mt-8
+        h-12 sm:h-14
+        rounded-xl sm:rounded-2xl
+        bg-gradient-to-r
+        from-violet-600
+        to-fuchsia-500
+        text-white
+        font-semibold
+        hover:scale-[1.02]
+        transition-all
+        active:scale-95
+        shadow-lg
+        cursor-pointer text-sm sm:text-base">
+          + New Chat
+        </button>
+
+        <div class="
+        mt-6 sm:mt-8
+        flex-1
+        overflow-y-auto
+        custom-scrollbar
+        pr-2">
+          <p class="
+          text-[10px] sm:text-xs
+          uppercase
+          tracking-widest
+          font-semibold
+          text-slate-500
+          mb-4">
+            Recent Chats
+          </p>
+
+          <div class="space-y-3">
+            <div class="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white/20 border border-white/20 hover:bg-white/30 transition cursor-pointer">
+              <h3 class="text-xs sm:text-sm font-semibold">-</h3>
+              <p class="text-[10px] sm:text-xs text-slate-500 mt-1">-</p>
+            </div>
+            <div class="p-3 sm:p-4 rounded-xl sm:rounded-2xl hover:bg-white/20 transition cursor-pointer">
+              <h3 class="text-xs sm:text-sm font-semibold">-</h3>
+              <p class="text-[10px] sm:text-xs text-slate-500 mt-1">-</p>
+            </div>
+            <div class="p-3 sm:p-4 rounded-xl sm:rounded-2xl hover:bg-white/20 transition cursor-pointer">
+              <h3 class="text-xs sm:text-sm font-semibold">-</h3>
+              <p class="text-[10px] sm:text-xs text-slate-500 mt-1">-</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="
+        glass
+        rounded-2xl sm:rounded-3xl
+        p-3 sm:p-4
+        flex items-center gap-3
+        mt-5">
+          <div class="
+          w-10 h-10 sm:w-12 sm:h-12
+          rounded-xl sm:rounded-2xl
+          bg-gradient-to-br
+          from-violet-600
+          to-fuchsia-500
+          flex items-center justify-center
+          text-white
+          font-bold
+          shrink-0 text-sm sm:text-base">
+            G
+          </div>
+          <div>
+            <h3 class="text-xs sm:text-sm font-semibold">Guest</h3>
+            <p class="text-[10px] sm:text-xs text-slate-500">User</p>
+          </div>
+        </div>
+      </aside>
+
+      <div id="sidebar-backdrop" onclick="toggleSidebar()" class="hidden fixed inset-0 bg-black/20 backdrop-blur-sm z-40 lg:hidden"></div>
+
+      <main class="
+      flex-1
+      glass
+      rounded-[24px] sm:rounded-[35px]
+      overflow-hidden
+      flex
+      flex-col
+      min-w-0">
+
+        <header class="
+        h-20 sm:h-24
+        shrink-0
+        border-b border-white/20
+        px-4 sm:px-8
+        flex items-center justify-between">
+
+          <div class="flex items-center gap-3 sm:gap-4">
+            <button onclick="toggleSidebar()" class="lg:hidden w-10 h-10 flex items-center justify-center glass rounded-xl text-xl cursor-pointer">
+              ☰
+            </button>
+            <div>
+              <h2 class="text-xl sm:text-2xl font-bold">Holla👋</h2>
+              <p class="text-xs sm:text-sm text-slate-500 mt-0.5 sm:mt-1 max-w-[180px] xs:max-w-none truncate sm:overflow-visible">
+                Ready to build something futuristic today?
+              </p>
+            </div>
+          </div>
+
+          <div class="floating-logo shrink-0">
+            <div class="
+            w-12 h-12 sm:w-16 sm:h-16
+            rounded-full
+            bg-gradient-to-br
+            from-fuchsia-400
+            to-violet-600
+            flex items-center justify-center
+            shadow-[0_0_30px_rgba(168,85,247,.3)] sm:shadow-[0_0_50px_rgba(168,85,247,.4)]">
+              <div class="
+              w-8 h-8 sm:w-10 sm:h-10
+              rounded-full
+              bg-white/30
+              flex items-center justify-center
+              text-white text-sm sm:text-base">
+                ✦
+              </div>
+            </div>
+          </div>
+
+        </header>
+
+        <div
+          id="chat-container"
+          class="
+          flex-1
+          overflow-y-auto
+          px-4 sm:px-8
+          py-4 sm:py-6
+          space-y-4 sm:space-y-6
+          custom-scrollbar
+          min-h-0">
+
+          <div class="flex items-start gap-3 sm:gap-4 message-animation">
+            <div class="
+            w-10 h-10 sm:w-12 sm:h-12
+            rounded-xl sm:rounded-2xl
+            bg-gradient-to-br
+            from-violet-500
+            to-fuchsia-500
+            flex items-center justify-center
+            text-white
+            shadow-lg
+            shrink-0 text-sm sm:text-base">
+              ✦
+            </div>
+
+            <div class="flex flex-col gap-1 sm:gap-2 max-w-[85%] sm:max-w-none">
+              <div class="flex items-center gap-2">
+                <span class="text-xs sm:text-sm font-semibold">Syid AI</span>
+                <span class="text-[10px] sm:text-xs text-slate-500">Just now</span>
+              </div>
+
+              <div class="
+              max-w-full sm:max-w-[700px]
+              rounded-[20px] sm:rounded-[28px]
+              rounded-tl-md
+              bg-white/20
+              border border-white/20
+              backdrop-blur-xl
+              px-4 py-3 sm:px-6 sm:py-5">
+                <p class="text-slate-900 text-xs sm:text-sm leading-relaxed">
+                  Welcome👋
+                  <br><br>
+                  I'm your futuristic AI companion. Ask me anything about coding, statistics, design, websites, or your next big project 🚀
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="p-4 sm:p-6 shrink-0">
+
+          <div id="file-preview-container" class="hidden mb-2 sm:mb-3">
+            <div class="inline-flex items-center gap-2 sm:gap-3 px-3 py-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl glass">
+              <span id="file-preview-icon" class="text-xs sm:text-sm">📄</span>
+              <span id="file-preview-name" class="text-xs sm:text-sm max-w-[120px] sm:max-w-[200px] truncate">file.pdf</span>
+              <button onclick="clearSelectedFile()" class="text-slate-500 hover:text-rose-500 transition text-xs sm:text-sm">✕</button>
+            </div>
+          </div>
+
+          <div class="
+          h-16 sm:h-20
+          rounded-[20px] sm:rounded-[30px]
+          glass
+          px-3 sm:px-5
+          flex items-center gap-2 sm:gap-4">
+
+            <input
+              type="file"
+              id="file-upload-input"
+              class="hidden"
+              accept="image/*,application/pdf"
+              onchange="handleFileSelection()">
+
+            <button
+              onclick="document.getElementById('file-upload-input').click()"
+              class="
+              w-10 h-10 sm:w-14 sm:h-14
+              rounded-xl sm:rounded-2xl
+              bg-white/20
+              border border-white/20
+              flex items-center justify-center
+              text-lg sm:text-xl
+              hover:scale-105
+              transition shrink-0 cursor-pointer">
+              📎
+            </button>
+
+            <input
+              type="text"
+              id="chat-input"
+              placeholder="Ask Syid AI anything..."
+              autocomplete="off"
+              onkeypress="if(event.key === 'Enter') sendChatMessage()"
+              class="
+              flex-1
+              bg-transparent
+              outline-none
+              text-xs sm:text-sm
+              text-slate-900
+              placeholder:text-slate-500 min-w-0">
+
+            <button class="
+            hidden sm:flex
+            w-14 h-14
+            rounded-2xl
+            bg-white/20
+            border border-white/20
+            items-center justify-center
+            text-xl
+            hover:scale-105
+            transition shrink-0 cursor-pointer">
+              🎤
+            </button>
+
+            <button
+              onclick="sendChatMessage()"
+              class="
+              h-10 sm:h-14
+              px-4 sm:px-8
+              rounded-xl sm:rounded-2xl
+              bg-gradient-to-r
+              from-violet-600
+              to-fuchsia-500
+              text-white
+              text-xs sm:text-sm
+              font-semibold
+              shadow-lg
+              hover:scale-105
+              transition
+              active:scale-95 shrink-0 cursor-pointer">
+              <span class="hidden md:inline">Send</span>
+              <span class="inline md:hidden">🚀</span>
+            </button>
+
+          </div>
+
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const backdrop = document.getElementById('sidebar-backdrop');
+      
+      if (sidebar.classList.contains('-translate-x-full')) {
+        sidebar.classList.remove('-translate-x-full');
+        backdrop.classList.remove('hidden');
+      } else {
+        sidebar.classList.add('-translate-x-full');
+        backdrop.classList.add('hidden');
+      }
+    }
+  </script>
+
+  <script src="assets/js/main.js"></script>
+
+</body>
+</html>

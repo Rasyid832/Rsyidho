@@ -1,0 +1,648 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Syid AI</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInBody(document.body);"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 font-['Inter'] h-screen flex flex-col overflow-hidden">
+
+    <header class="bg-slate-900/60 backdrop-blur-md border-b border-slate-800/80 px-6 py-4 flex items-center justify-between shadow-lg shrink-0">
+        <div class="flex items-center gap-3.5">
+            <div class="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 to-blue-500 shadow-md shadow-purple-500/20">
+                <span class="text-xl animate-pulse">🔮</span>
+                <span class="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                </span>
+            </div>
+            <div>
+                <h1 class="text-lg font-bold bg-gradient-to-r from-purple-400 via-indigo-300 to-blue-400 bg-clip-text text-transparent tracking-wide">
+                    Syid AI
+                </h1>
+                <p class="text-[10px] font-medium text-slate-400/90 tracking-wider uppercase">Advanced Assistant</p>
+            </div>
+        </div>
+
+        <button onclick="window.location.reload()" class="flex items-center gap-2 text-xs font-medium text-slate-400 hover:text-rose-400 bg-slate-950 border border-slate-800 hover:border-rose-900/50 px-3 py-2 rounded-xl transition-all cursor-pointer group">
+            <span class="group-hover:rotate-45 transition-transform duration-300">🧹</span> Clear Chat
+        </button>
+    </header>
+
+    <main class="flex-1 max-w-4xl w-full mx-auto p-4 md:p-6 flex flex-col h-[calc(100vh-5rem)] overflow-hidden">
+        
+        <div id="chat-container" class="flex-1 bg-slate-900/30 border border-slate-800/60 rounded-2xl p-4 md:p-6 overflow-y-auto space-y-5 shadow-2xl custom-scrollbar backdrop-blur-sm min-h-0">
+            
+            <div class="flex items-start gap-3 max-w-[85%] group">
+                <div class="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0 shadow-sm text-sm">
+                    🤖
+                </div>
+                <div class="flex flex-col gap-1">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-semibold text-slate-400">Syid AI</span>
+                        <span class="text-[10px] text-slate-600 font-medium">Just now</span>
+                    </div>
+                    <div class="bg-slate-900/90 text-slate-200 rounded-2xl rounded-tl-none px-4 py-3 text-sm border border-slate-800/80 shadow-md leading-relaxed tracking-wide font-normal">
+                        Yo bro! Mulai sekarang aku bakal jadi asisten pribadi sekaligus teman diskusi kamu. Mau bahas kodingan, tugas kuliah, rumus statistik, nyari ide project, atau sekadar ngobrol santai? Lempar aja ke sini, kita beresin bareng-bareng! 🚀
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mt-4 bg-slate-900/80 p-2 rounded-2xl border border-slate-800/80 shadow-2xl flex flex-col gap-2 focus-within:border-purple-500/50 focus-within:ring-1 focus-within:ring-purple-500/20 transition-all backdrop-blur-md shrink-0">
+            
+            <div id="file-preview-container" class="hidden flex items-center gap-2 px-4 pt-2">
+                <div class="bg-slate-800 border border-slate-700 text-xs px-3 py-1.5 rounded-xl flex items-center gap-2 text-purple-400 font-medium animate-fade-in">
+                    <span id="file-preview-icon">📄</span>
+                    <span id="file-preview-name" class="max-w-[150px] truncate">nama_file.pdf</span>
+                    <button onclick="clearSelectedFile()" class="text-slate-500 hover:text-rose-400 font-bold ml-1 cursor-pointer">✕</button>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2 w-full">
+                <input type="file" id="file-upload-input" class="hidden" accept="image/*,application/pdf" onchange="handleFileSelection()">
+                
+                <button onclick="document.getElementById('file-upload-input').click()" class="p-3 text-slate-400 hover:text-purple-400 hover:bg-slate-800/60 rounded-xl transition cursor-pointer text-lg" title="Upload Foto atau PDF">
+                    📎
+                </button>
+
+                <input 
+                    type="text" 
+                    id="chat-input" 
+                    class="flex-1 bg-transparent border-0 rounded-xl px-2 py-3.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none font-medium" 
+                    placeholder="Tanyakan sesuatu atau bahas file di sini (Tekan Enter)..." 
+                    onkeypress="if(event.key === 'Enter') sendChatMessage()"
+                    autocomplete="off"
+                >
+                <button 
+                    onclick="sendChatMessage()" 
+                    class="bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold text-xs tracking-wider uppercase px-5 py-3.5 rounded-xl transition-all active:scale-95 shadow-lg shadow-purple-900/20 flex items-center gap-2 cursor-pointer"
+                >
+                    Send 🚀
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="text-center py-2 text-[11px] font-medium text-slate-600 border-t border-slate-900 bg-slate-950 shrink-0">
+        Syid AI Ecosystem &bull; Created with Node.js & Gemini 2.5 Flash
+    </footer>
+
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 9999px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+    </style>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Syid AI</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sora: ['Sora', 'sans-serif']
+          },
+
+          animation: {
+            float: 'float 6s ease-in-out infinite',
+            fadeUp: 'fadeUp .4s ease',
+            pulseSlow: 'pulseSlow 4s infinite'
+          },
+
+          keyframes: {
+            float: {
+              '0%,100%': {
+                transform: 'translateY(0px)'
+              },
+              '50%': {
+                transform: 'translateY(-15px)'
+              }
+            },
+
+            fadeUp: {
+              '0%': {
+                opacity: '0',
+                transform: 'translateY(20px)'
+              },
+              '100%': {
+                opacity: '1',
+                transform: 'translateY(0px)'
+              }
+            },
+
+            pulseSlow: {
+              '0%,100%': {
+                opacity: '.5'
+              },
+              '50%': {
+                opacity: '1'
+              }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+</head>
+
+<body class="font-sora h-screen overflow-hidden bg-gradient-to-br from-[#f8e8ff] via-[#eef2ff] to-[#f5f3ff] relative">
+
+  <!-- Aurora Background -->
+  <div class="absolute top-[-200px] left-[-150px] w-[500px] h-[500px] bg-fuchsia-300 opacity-30 blur-[120px] rounded-full animate-pulseSlow"></div>
+
+  <div class="absolute bottom-[-200px] right-[-150px] w-[500px] h-[500px] bg-violet-400 opacity-30 blur-[120px] rounded-full animate-pulseSlow"></div>
+
+  <!-- Main Layout -->
+  <div class="flex h-screen p-5 gap-5">
+
+    <!-- SIDEBAR -->
+    <aside class="
+    w-[290px]
+    rounded-[35px]
+    border border-white/30
+    bg-white/15
+    backdrop-blur-[30px]
+    shadow-[0_10px_40px_rgba(168,85,247,.15)]
+    p-5
+    flex
+    flex-col">
+
+      <!-- Logo -->
+      <div class="flex items-center gap-3">
+
+        <div class="
+        w-12 h-12
+        rounded-2xl
+        bg-gradient-to-br
+        from-fuchsia-400
+        to-violet-500
+        flex items-center justify-center
+        text-white
+        text-xl
+        shadow-lg">
+          ✦
+        </div>
+
+        <div>
+          <h1 class="font-bold text-slate-800 text-lg">
+            Syid AI
+          </h1>
+
+          <p class="text-xs text-slate-500">
+            Futuristic Assistant
+          </p>
+        </div>
+
+      </div>
+
+      <!-- New Chat -->
+      <button class="
+      mt-8
+      h-14
+      rounded-2xl
+      bg-gradient-to-r
+      from-violet-500
+      to-fuchsia-500
+      text-white
+      font-medium
+      shadow-lg
+      hover:scale-[1.02]
+      transition-all">
+        + New Chat
+      </button>
+
+      <!-- Menu -->
+      <div class="mt-8 space-y-3">
+
+        <div class="
+        flex items-center gap-3
+        px-4 py-4
+        rounded-2xl
+        bg-white/20
+        border border-white/20
+        text-slate-700
+        cursor-pointer
+        hover:bg-white/30
+        transition">
+          💬
+          <span class="font-medium text-sm">
+            Chat
+          </span>
+        </div>
+
+        <div class="
+        flex items-center gap-3
+        px-4 py-4
+        rounded-2xl
+        text-slate-600
+        hover:bg-white/20
+        transition
+        cursor-pointer">
+          🧠
+          <span class="font-medium text-sm">
+            AI Tools
+          </span>
+        </div>
+
+        <div class="
+        flex items-center gap-3
+        px-4 py-4
+        rounded-2xl
+        text-slate-600
+        hover:bg-white/20
+        transition
+        cursor-pointer">
+          📁
+          <span class="font-medium text-sm">
+            Files
+          </span>
+        </div>
+
+        <div class="
+        flex items-center gap-3
+        px-4 py-4
+        rounded-2xl
+        text-slate-600
+        hover:bg-white/20
+        transition
+        cursor-pointer">
+          ⚙️
+          <span class="font-medium text-sm">
+            Settings
+          </span>
+        </div>
+
+      </div>
+
+      <!-- Chat History -->
+      <div class="mt-8 flex-1 overflow-y-auto pr-2">
+
+        <p class="text-xs font-semibold text-slate-500 mb-4 uppercase tracking-wider">
+          Recent Chats
+        </p>
+
+        <div class="space-y-3">
+
+          <div class="
+          p-4
+          rounded-2xl
+          bg-white/20
+          border border-white/20
+          hover:bg-white/30
+          cursor-pointer
+          transition">
+
+            <h3 class="text-sm font-semibold text-slate-700">
+              Build Portfolio Website
+            </h3>
+
+            <p class="text-xs text-slate-500 mt-1">
+              2 minutes ago
+            </p>
+
+          </div>
+
+          <div class="
+          p-4
+          rounded-2xl
+          hover:bg-white/20
+          cursor-pointer
+          transition">
+
+            <h3 class="text-sm font-semibold text-slate-700">
+              Statistics Homework
+            </h3>
+
+            <p class="text-xs text-slate-500 mt-1">
+              Yesterday
+            </p>
+
+          </div>
+
+          <div class="
+          p-4
+          rounded-2xl
+          hover:bg-white/20
+          cursor-pointer
+          transition">
+
+            <h3 class="text-sm font-semibold text-slate-700">
+              Planet Tracker UI
+            </h3>
+
+            <p class="text-xs text-slate-500 mt-1">
+              3 days ago
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Profile -->
+      <div class="
+      mt-4
+      p-4
+      rounded-3xl
+      bg-white/20
+      border border-white/20
+      flex items-center gap-3">
+
+        <div class="
+        w-12 h-12
+        rounded-2xl
+        bg-gradient-to-br
+        from-violet-500
+        to-fuchsia-500
+        flex items-center justify-center
+        text-white
+        font-bold">
+          R
+        </div>
+
+        <div>
+          <h3 class="text-sm font-semibold text-slate-700">
+            Rasyid Ridho
+          </h3>
+
+          <p class="text-xs text-slate-500">
+            Premium User
+          </p>
+        </div>
+
+      </div>
+
+    </aside>
+
+    <!-- MAIN AREA -->
+    <main class="
+    flex-1
+    rounded-[35px]
+    border border-white/30
+    bg-white/15
+    backdrop-blur-[30px]
+    shadow-[0_10px_40px_rgba(168,85,247,.15)]
+    flex
+    flex-col
+    overflow-hidden">
+
+      <!-- Header -->
+      <div class="
+      h-24
+      border-b border-white/20
+      px-8
+      flex items-center justify-between">
+
+        <div>
+
+          <h2 class="text-2xl font-bold text-slate-800">
+            Good Evening, Rasyid 👋
+          </h2>
+
+          <p class="text-sm text-slate-500 mt-1">
+            Ready to build something futuristic today?
+          </p>
+
+        </div>
+
+        <!-- Orb -->
+        <div class="animate-float">
+
+          <div class="
+          w-16 h-16
+          rounded-full
+          bg-gradient-to-br
+          from-fuchsia-400
+          to-violet-500
+          flex items-center justify-center
+          shadow-[0_0_50px_rgba(168,85,247,.4)]">
+
+            <div class="
+            w-10 h-10
+            rounded-full
+            bg-white/30
+            backdrop-blur-xl
+            flex items-center justify-center
+            text-white">
+              ✦
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Chat Area -->
+      <div class="flex-1 overflow-y-auto px-10 py-8 space-y-6">
+
+        <!-- AI -->
+        <div class="flex items-start gap-4 animate-fadeUp">
+
+          <div class="
+          w-12 h-12
+          rounded-2xl
+          bg-gradient-to-br
+          from-violet-500
+          to-fuchsia-500
+          flex items-center justify-center
+          text-white
+          shadow-lg">
+            ✦
+          </div>
+
+          <div class="
+          max-w-[700px]
+          rounded-[30px]
+          rounded-tl-md
+          bg-white/20
+          border border-white/20
+          backdrop-blur-xl
+          px-6 py-5">
+
+            <p class="text-slate-700 leading-relaxed">
+              Hey Rasyid 👋<br><br>
+
+              I’m ready to help you redesign Syid AI into a futuristic desktop assistant with modern UI/UX, glassmorphism, and smooth animations 🚀
+            </p>
+
+          </div>
+
+        </div>
+
+        <!-- User -->
+        <div class="flex justify-end animate-fadeUp">
+
+          <div class="
+          max-w-[600px]
+          rounded-[30px]
+          rounded-tr-md
+          bg-gradient-to-r
+          from-violet-500
+          to-fuchsia-500
+          px-6 py-5
+          text-white
+          shadow-lg">
+
+            Can you make the UI look more premium and futuristic?
+
+          </div>
+
+        </div>
+
+        <!-- AI -->
+        <div class="flex items-start gap-4 animate-fadeUp">
+
+          <div class="
+          w-12 h-12
+          rounded-2xl
+          bg-white/20
+          border border-white/20
+          flex items-center justify-center">
+            ✦
+          </div>
+
+          <div class="
+          max-w-[700px]
+          rounded-[30px]
+          rounded-tl-md
+          bg-white/20
+          border border-white/20
+          backdrop-blur-xl
+          px-6 py-5">
+
+            <p class="text-slate-700 leading-relaxed">
+              Absolutely 😎<br><br>
+
+              We can add:
+              <br><br>
+
+              ✨ Aurora background<br>
+              ✨ Floating gradients<br>
+              ✨ Sidebar interactions<br>
+              ✨ AI typing effect<br>
+              ✨ Smooth transitions<br>
+              ✨ Premium glassmorphism
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Input -->
+      <div class="p-6">
+
+        <div class="
+        h-20
+        rounded-[30px]
+        bg-white/20
+        border border-white/20
+        backdrop-blur-xl
+        px-5
+        flex items-center gap-4">
+
+          <!-- Plus -->
+          <button class="
+          w-14 h-14
+          rounded-2xl
+          bg-white/20
+          border border-white/20
+          text-slate-700
+          text-2xl
+          hover:scale-105
+          transition">
+            +
+          </button>
+
+          <!-- Input -->
+          <input
+            type="text"
+            placeholder="Ask Syid AI anything..."
+            class="
+            flex-1
+            bg-transparent
+            outline-none
+            text-slate-700
+            placeholder:text-slate-500
+            text-sm"
+          />
+
+          <!-- Mic -->
+          <button class="
+          w-14 h-14
+          rounded-2xl
+          bg-white/20
+          border border-white/20
+          text-xl
+          hover:scale-105
+          transition">
+            🎤
+          </button>
+
+          <!-- Send -->
+          <button class="
+          h-14
+          px-8
+          rounded-2xl
+          bg-gradient-to-r
+          from-violet-500
+          to-fuchsia-500
+          text-white
+          font-semibold
+          shadow-lg
+          hover:scale-105
+          transition">
+            Send
+          </button>
+
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+</body>
+</html>
