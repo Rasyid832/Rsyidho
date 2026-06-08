@@ -1,5 +1,9 @@
 {
   "version": 2,
+  "env": {
+    "GEMINI_API_KEY": "AQ.Ab8RN6L2OeVtre1s4hlQFPMR7iQ1fD8z3pQSQjYhEqLvXefhvQ",
+    "HF_TOKEN": "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"
+  },
   "routes": [
     {
       "src": "/api/ai/(.*)",
