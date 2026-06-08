@@ -11,6 +11,6 @@ if (!process.env.GEMINI_API_KEY) {
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 // GANTI BARIS INI: Tambahkan '-latest' di belakang nama modelnya, bro!
-const aiModel = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+const aiModel = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' });
 
 module.exports = aiModel;
